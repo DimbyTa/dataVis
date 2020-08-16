@@ -165,7 +165,7 @@ def DataFrameToTableMada(dataframe):
     data from Our World in Data
     """
     
-    db = connectionTodb("root","m4th3m4t1qu35","localhost","DataVis")
+    db = connectionTodb("dataVis","dataVis2020","localhost","dataVis")
     cursor = db.cursor()
     query = """CREATE TABLE IF NOT EXISTS Mada (cas_confirmes INT,
                                                      deces INT,
@@ -205,7 +205,7 @@ def DataFrameToTableGlobal(dataframe):
     data from Our World in Data
     """
     
-    db = connectionTodb("root","m4th3m4t1qu35","localhost","DataVis")
+    db = connectionTodb("dataVis","dataVis2020","localhost","dataVis")
     cursor = db.cursor()
     query = """CREATE TABLE IF NOT EXISTS OurWorldIndata (iso_code Varchar(255),
                                                      continent varchar(255) NOT NULL,
@@ -272,7 +272,7 @@ def DataFrameToTableLatest(dataframe):
     data from Our World in Data
     """
     
-    db = connectionTodb("root","m4th3m4t1qu35","localhost","DataVis")
+    db = connectionTodb("dataVis","dataVis2020","localhost","dataVis")
     cursor = db.cursor()
     query = """CREATE TABLE IF NOT EXISTS Latest (rank INT,Country Varchar(255) PRIMARY KEY,
                                                      total_cases BIGINT UNSIGNED,
