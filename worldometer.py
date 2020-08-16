@@ -1,12 +1,6 @@
 import scrappingFunction as sc
 import numpy as np
-def bitstring_to_bytes(s):
-    v = int(s, 2)
-    b = bytearray()
-    while v:
-        b.append(v & 0xff)
-        v >>= 8
-    return bytes(b[::-1])
+
 html1 = sc.getHTML("https://www.worldometers.info/coronavirus/")
 df1 = sc.getDataGLobalWdmtr(html1)
 html1.close()
