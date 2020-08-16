@@ -1,0 +1,55 @@
+import scrappingFunction as sc
+import numpy as np
+def bitstring_to_bytes(s):
+    v = int(s, 2)
+    b = bytearray()
+    while v:
+        b.append(v & 0xff)
+        v >>= 8
+    return bytes(b[::-1])
+html1 = sc.getHTML("https://www.worldometers.info/coronavirus/")
+df1 = sc.getDataGLobalWdmtr(html1)
+html1.close()
+df1 = df1.fillna("0")
+for k in df1.keys()[2:]:
+    temp = []
+    for d in df1[k]:
+        try:
+            #print (k)
+            d = d.replace("," , "")
+            d = d.replace(" " , "0")
+            d = d.replace("Nan", "0")
+            d = d.replace("N/A", "0")
+            #d = d.item()
+        #d = np.string_.replace(d,",","")
+            #print(d)
+            temp.append(d)
+            
+        except:
+            continue
+    #print(len(temp))
+    #print(len(df1[k]))
+    df1[k] = np.array(temp)
+
+for column in df1.keys()[3:]:
+    #print(column)
+    df1[column] = sc.pd.to_numeric(df1[column])
+
+df1 = df1.drop(df1.index[0])
+df1 = df1.reset_index(drop=True)
+df1 = df1.drop(df1.index[len(df1)-1])
+
+df1 = df1.reset_index(drop=True)
+df1 = df1.fillna(0)
+df1 = df1.fillna(0)
+
+for column in df1.keys()[2:10]:
+    #print(column)
+    df1[column] = df1[column].astype(float)
+
+#print(df1.shape)
+#print(df1.info())
+#df1.pop(df1.keys()[0])
+sc.DataFrameToTableLatest(df1)
+#sc.saveData(df1,"Wd")
+print(df1.info())
