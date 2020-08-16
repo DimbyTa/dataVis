@@ -9,7 +9,7 @@ html.close()
 globalData = sc.byteStreamtoDataFrame(tempD,"utf-8")
 
 
-sc.createDatabase("DataVis","root","m4th3m4t1qu35", "localhost")
+
 globalData['iso_code'] = globalData['iso_code'].fillna("unknown")
 globalData['continent'] = globalData['continent'].fillna("unknown")
 globalData = globalData.fillna(0)
