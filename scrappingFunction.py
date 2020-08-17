@@ -2,7 +2,7 @@ from urllib.request import urlopen, Request
 from bs4 import BeautifulSoup as BS
 from urllib.error import HTTPError
 from urllib.error import URLError
-from pandas.compat import StringIO
+from io import StringIO
 import pandas as pd
 import numpy as np
 import os
@@ -194,6 +194,7 @@ def DataFrameToTableMada(dataframe):
         cursor.execute(insertion, tuple(dataframe.loc[i]))
     #cursor.execute(insertion, tuple(dataframe.loc[0]))
     
+    db.commit()
     db.commit()   
     cursor.close()
     db.close()
@@ -208,17 +209,21 @@ def DataFrameToTableGlobal(dataframe):
     db = connectionTodb("dataVis","dataVis2020","localhost","dataVis")
     cursor = db.cursor()
     query = """CREATE TABLE IF NOT EXISTS OurWorldIndata (iso_code Varchar(255),
-                                                     continent varchar(255) NOT NULL,
-                                                     locttion VARCHAR(255),
+                                                     continent varchar(255),
+                                                     location VARCHAR(255),
                                                      date DATE,
-                                                     total_cases FLOAT,
-                                                     new_cases   FLOAT,
-                                                     total_deaths FLOAT,                
-                                                     new_deaths   FLOAT ,                     
+                                                     total_cases BIGINT,
+                                                     new_cases   BIGINT,
+                                                     new_cases_smoothed BIGINT, 
+                                                     total_deaths BIGINT,                
+                                                     new_deaths   BIGINT ,
+                                                     new_deaths_smoothed BIGINT,                     
                                                      total_cases_per_million  FLOAT,            
-                                                     new_cases_per_million    FLOAT ,         
+                                                     new_cases_per_million    FLOAT ,
+                                                     new_cases_smoothed_per_million  FLOAT,         
                                                      total_deaths_per_million FLOAT  ,        
-                                                     new_deaths_per_million   FLOAT   ,       
+                                                     new_deaths_per_million   FLOAT   ,
+                                                     new_deaths_smoothed_per_million FLOAT,       
                                                      new_tests   FLOAT,                       
                                                      total_tests FLOAT,                       
                                                      total_tests_per_thousand  FLOAT,         
@@ -229,7 +234,7 @@ def DataFrameToTableGlobal(dataframe):
                                                      positive_rate FLOAT,
                                                      tests_units VARCHAR(255),
                                                      stringency_index  FLOAT,
-                                                     population FLOAT,
+                                                     population BIGINT,
                                                      population_density FLOAT,
                                                      median_age FLOAT,
                                                      aged_65_older  FLOAT,
@@ -245,15 +250,15 @@ def DataFrameToTableGlobal(dataframe):
                                                      life_expectancy FLOAT
                                                      );"""
     query1 = """DROP TABLE IF EXISTS OurWorldIndata;"""    
-    insertion = """INSERT INTO `OurWorldIndata` (iso_code, continent, locttion ,date, total_cases, new_cases, total_deaths,
-                                                        new_deaths, total_cases_per_million, new_cases_per_million, total_deaths_per_million,
-                                                        new_deaths_per_million, new_tests, total_tests, total_tests_per_thousand,
+    insertion = """INSERT INTO `OurWorldIndata` (iso_code, continent, location ,date, total_cases, new_cases, new_cases_smoothed,total_deaths,
+                                                        new_deaths,new_deaths_smoothed, total_cases_per_million, new_cases_per_million,new_cases_smoothed_per_million, total_deaths_per_million,
+                                                        new_deaths_per_million, new_deaths_smoothed_per_million,new_tests, total_tests, total_tests_per_thousand,
                                                         new_tests_per_thousand, new_tests_smoothed , new_tests_smoothed_per_thousand,
                                                         tests_per_case, positive_rate, tests_units, stringency_index,population,
                                                         population_density,  median_age, aged_65_older, aged_70_older, gdp_per_capita,
                                                         extreme_poverty, cardiovasc_death_rate, diabetes_prevalence, female_smokers,
                                                         male_smokers, handwashing_facilities, hospital_beds_per_thousand, life_expectancy
-                                                        ) VALUES (%s, %s, %s, %s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"""
+                                                        ) VALUES (%s, %s, %s, %s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"""
     
     cursor.execute(query1)
     cursor.execute(query)
@@ -261,6 +266,7 @@ def DataFrameToTableGlobal(dataframe):
         cursor.execute(insertion, tuple(dataframe.loc[i]))
     #cursor.execute(insertion, tuple(dataframe.loc[0]))
     
+    db.commit()
     db.commit()   
     cursor.close()
     db.close()
@@ -274,7 +280,7 @@ def DataFrameToTableLatest(dataframe):
     
     db = connectionTodb("dataVis","dataVis2020","localhost","dataVis")
     cursor = db.cursor()
-    query = """CREATE TABLE IF NOT EXISTS Latest (rank INT,Country Varchar(255) PRIMARY KEY,
+    query = """CREATE TABLE IF NOT EXISTS Latest (rank INT,Country Varchar(255),
                                                      total_cases BIGINT UNSIGNED,
                                                      new_cases   BIGINT UNSIGNED,
                                                      total_deaths BIGINT UNSIGNED,                
@@ -296,6 +302,8 @@ def DataFrameToTableLatest(dataframe):
         cursor.execute(insertion, tuple(dataframe.loc[i].tolist()))
     #cursor.execute(insertion, tuple(dataframe.loc[0]))
     
+    db.commit()
     db.commit()   
     cursor.close()
     db.close()
+    #return db

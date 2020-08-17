@@ -38,9 +38,9 @@ def getHash(url):
 
 current_hash = getHash("http://cco-covid19.gov.mg/fr/accueil/")
 ### Detect change in the code
-while (getHash("http://cco-covid19.gov.mg/fr/accueil/") == current_hash):
-    print("Not Changed")
-    time.sleep(300)
+#while (getHash("http://cco-covid19.gov.mg/fr/accueil/") == current_hash):
+    #print("Not Changed")
+    #time.sleep(300)
 
 
 
