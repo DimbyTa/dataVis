@@ -57,7 +57,7 @@ l = []
 for i in range(22):
 	l.append(str(sc.datetime.datetime.now())[:10])
 df1['date'] = l
-print(df1.head(5))
+print(df1.info())
 sc.DataFrameToTableMada(df1)
-sc.saveData(df1,"MadaReg")
-#print(df1.head)
+#sc.saveData(df1,"MadaReg")
+print(df1)

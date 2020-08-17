@@ -13,7 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $test = 'test';
-    return view('dashboard', ['test' => $test]);
-});
+Route::get('/', 'Dashboard@home');
+Route::get('/home', 'Dashboard@home');

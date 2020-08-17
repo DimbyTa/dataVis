@@ -48668,13 +48668,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var d3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! d3 */ "./node_modules/d3/index.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+console.log(madaData);
  //	Bar chart
 
 var svgContainer = document.querySelector('#newCases svg');
 var width = parseInt(getComputedStyle(svgContainer).width);
 var height = parseInt(getComputedStyle(svgContainer).height);
-Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])('body').append('div').attr('id', 'tooltip').style('opacity', 0);
-var svgCumul = Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])("#cumulMada svg");
+Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])('body').append('div').attr('id', 'tooltip').style('opacity', 0); // const svgCumul = select("#cumulMada svg");
+
 var margin = {
   top: 20,
   right: 20,
@@ -48683,9 +48684,11 @@ var margin = {
 };
 
 var tracking = function tracking() {
-  x = Object(d3__WEBPACK_IMPORTED_MODULE_0__["mouse"])(this)[1];
-}; //	Importing datas
+  var x = Object(d3__WEBPACK_IMPORTED_MODULE_0__["mouse"])(this)[1];
+};
 
+var svgDataParRegion = Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])("#casesPerRegion svg");
+renderBarChart(madaData, "name_region", "cas_comfirmes", svgDataParRegion); //	Importing datas
 
 Object(d3__WEBPACK_IMPORTED_MODULE_0__["csv"])('data/cumul-mada.csv').then(function (data, error) {
   // console.log(data);
@@ -48711,13 +48714,15 @@ Object(d3__WEBPACK_IMPORTED_MODULE_0__["csv"])('data/cumul-mada.csv').then(funct
 
 /**
  * 
- * @param {*} data 
- * @param {*} xIndex 
- * @param {*} yIndex 
+ * @param {*} data Data to plot
+ * @param {*} xIndex The absciss value
+ * @param {*} yIndex The ordonate value
+ * @param {*} svgContainer The svg element where the graph will be drawn
  */
 
 function renderBarChart(data, xIndex, yIndex, svgContainer) {
   console.log("Rendering bar chart");
+  console.log(svgContainer);
 
   var xValue = function xValue(d) {
     return d[xIndex];
@@ -48780,6 +48785,15 @@ function renderBarChart(data, xIndex, yIndex, svgContainer) {
   });
 } // //	Line chart
 
+/**
+ * 
+ * @param {*} data Data to plot
+ * @param {*} xIndex The absciss value
+ * @param {*} yIndex The ordonate value
+ * @param {*} svgContainer The svg element where the graph will be drawn
+ * @param {*} mode The mode of scale of y(linear or logarithmic)
+ */
+
 
 function renderLineChart(data, xIndex, yIndex, svgContainer, mode) {
   var xValue = function xValue(d) {
@@ -48788,21 +48802,14 @@ function renderLineChart(data, xIndex, yIndex, svgContainer, mode) {
 
   var yValue = function yValue(d) {
     return d[yIndex];
-  };
+  }; //	Constant for the width and height of the graph
+
 
   var innerWidth = width - margin.left - margin.right;
-  var innerHeight = height - margin.top - margin.bottom; // //	Creating scale
-  // const xScale = scaleLinear()
-  // 	.domain([0, max(data, xValue)])
-  // 	.range([0, innerWidth]);
-  // const yScale = scaleBand()
-  // 	.domain(data.map( d => d[yIndex]))
-  // 	.range([0, innerHeight])
-  // 	.padding(0.5);
-  //	Creating scale
+  var innerHeight = height - margin.top - margin.bottom; //	Creating scale
+  // console.log(extent(data, xValue));
 
-  console.log(Object(d3__WEBPACK_IMPORTED_MODULE_0__["extent"])(data, xValue));
-  var xScale = Object(d3__WEBPACK_IMPORTED_MODULE_0__["scaleTime"])().domain(Object(d3__WEBPACK_IMPORTED_MODULE_0__["extent"])(data, xValue)).range([0, innerWidth]);
+  var xScale = Object(d3__WEBPACK_IMPORTED_MODULE_0__["scaleTime"])().domain(Object(d3__WEBPACK_IMPORTED_MODULE_0__["extent"])(data, xValue)).range([0, innerWidth]); //	Choosing the mode of the yScale
 
   if (mode === 'log') {
     var yScale = Object(d3__WEBPACK_IMPORTED_MODULE_0__["scaleSymlog"])().domain([0, Object(d3__WEBPACK_IMPORTED_MODULE_0__["max"])(data, yValue)]).range([innerHeight, 0]);
@@ -48811,20 +48818,16 @@ function renderLineChart(data, xIndex, yIndex, svgContainer, mode) {
   } //	Creating the wrapper of the graph(container)
 
 
-  var graphWrapper = svgContainer.append('g').attr('transform', "translate(".concat(margin.left, ", ").concat(margin.top, ")")); //	Creating axis
+  var graphWrapper = svgContainer.append('g').attr('transform', "translate(".concat(margin.left, ", ").concat(margin.top, ")")); // .attr('class', 'graph-wrapper');
+  // .attr('id', `${xIndex}-${yIndex}`);
+  //	Creating axis
   // const yAxis = axisLeft(invertYScale);
   // const xAxis = axisBottom(xScale);
   // console.log(yScale.domain()); 
   //	Adding axis to the graphWrapper
 
   graphWrapper.append('g').call(Object(d3__WEBPACK_IMPORTED_MODULE_0__["axisLeft"])(yScale));
-  graphWrapper.append('g').call(Object(d3__WEBPACK_IMPORTED_MODULE_0__["axisBottom"])(xScale)).attr('transform', "translate(0, ".concat(innerHeight, ")")).selectAll(".tick text").attr('text-anchor', 'end').attr('transform', 'rotate(-60)'); // //	Creating rect for the bars
-  // graphWrapper.selectAll("rect").data(data)
-  // 	.enter().append('rect')
-  // 	.attr('y', d => yScale(d[yIndex]))
-  // 	.attr('width', d => xScale(d[xIndex]))
-  // 	.attr('height', d => yScale.bandwidth());
-  //	Creating path
+  graphWrapper.append('g').call(Object(d3__WEBPACK_IMPORTED_MODULE_0__["axisBottom"])(xScale)).attr('transform', "translate(0, ".concat(innerHeight, ")")).selectAll(".tick text").attr('text-anchor', 'end').attr('transform', 'rotate(-60)'); //	Creating path
 
   var lineGenerator = Object(d3__WEBPACK_IMPORTED_MODULE_0__["line"])().x(function (d) {
     return xScale(d[xIndex]);
@@ -48844,19 +48847,21 @@ function renderLineChart(data, xIndex, yIndex, svgContainer, mode) {
   }).attr('cy', function (d) {
     return yScale(d[yIndex]);
   }).attr('r', 4).on("mouseover", function (a, b, c) {
-    // Object { Date_reported: Date Mon Jul 06 2020 03:00:00 GMT+0300 (East Africa Time), Country_code: "MG", Country: "Madagascar", WHO_region: "AFRO", New_cases: 213, Cumulative_cases: 2941, New_deaths: 3, Cumulative_deaths: 32, Date_formated: "2020-07-06" }
+    //Creating text for the tooltip
     var text = "<strong> ".concat(a.Date_formated, "</strong></br>");
     text += "Total cas: ".concat(a.Cumulative_cases, "</br>");
     text += "Nouveau cas: ".concat(a.New_cases, "</br>");
-    text += "Nouveau d\xE9c\xE8s: ".concat(a.New_deaths, "</br>");
+    text += "Nouveau d\xE9c\xE8s: ".concat(a.New_deaths, "</br>"); // text += `Gueris: ${a.New_}</br>`;
+    //Debugging
+
     console.log(a);
-    console.log(Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])('#tooltip').style('opacity', 1).html(text));
+    Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])('#tooltip').style('opacity', 1).html(text);
     Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])(this).attr('class', 'focused').attr("r", 6);
   }).on("mouseout", function () {
     Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])("#tooltip").style('opacity', 0);
     Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])(this).attr('class', '').attr("r", 4);
   }).on("mousemove", function () {
-    // console.log(event.clientX);
+    console.log(d3__WEBPACK_IMPORTED_MODULE_0__["event"].clientX);
     var x = d3__WEBPACK_IMPORTED_MODULE_0__["event"].clientX;
     var y = d3__WEBPACK_IMPORTED_MODULE_0__["event"].clientY;
     x += 10;
@@ -48931,8 +48936,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/raph35/Documents/DataViiz/dataViiz/dataViz2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/raph35/Documents/DataViiz/dataViiz/dataViz2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/raph35/dataVisFinal/dataVis/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/raph35/dataVisFinal/dataVis/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

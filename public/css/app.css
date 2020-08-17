@@ -1,5 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);
-
+@import url(https://fonts.googleapis.com/css?family=Nunito);/*
+*	Style for the diagramme
+*/
 .line-path{
 	fill : none;
 	stroke-width: 1px;
@@ -16,14 +17,6 @@ circle{
 	stroke: none;
 }
 
-body {
-	background-color: aliceblue;
-}
-
-.section{
-	margin-bottom: 20px;
-}
-
 #tooltip{
 	position: fixed;
 	left: 40px;
@@ -33,6 +26,28 @@ body {
 	color: rgb(194, 194, 194);
 	padding: 5px;
 	font-size : 0.8em;
+}
+
+body {
+	background-color: aliceblue;
+}
+
+.section{
+	margin-bottom: 20px;
+}
+
+
+.tableau-resume{
+	background-color: rgb(255, 255, 255);
+	color: black;
+	display: inline-block;
+	/* box-shadow: 0 0 10px white; */
+	border-radius: 10px;
+	margin-bottom: 20px;
+}
+.section-diagrame{
+	background-color: white;
+	padding: 20px;
 }@charset "UTF-8";
 
 /*!
