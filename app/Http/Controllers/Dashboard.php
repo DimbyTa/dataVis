@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \App\Mada;
 
 class Dashboard extends Controller
 {
     //
     public function home(){
         //  Recuperation des donnees totals pour madagascar
-        $madaData = '';
+
+        $madaData = json_encode(Mada::all());
         
         //  Recuperation des  derniers nouveau cas
         $lastCases = [

@@ -93,9 +93,27 @@
 			</div>
 		</div>
 	</section>
+	<section class="section-diagrame">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="section">
+					<div class="card">
+						<div class="card-header"><h3>Cas cumulés log</h3></div>
+						<div class="card-body"  style="padding: 1.25rem">
+							<div id="casesPerRegion">
+								<svg width="100%" height="400px"></svg>						
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+			</div>
+		</div>
+	</section>
 </div>
 @endsection
 
 @section('jsImport')
-<script> var madaRegion = <?php echo $madaParRegion ?>, madaData = <?=$madaData?>;</script>
+<script> var madaData = <?=$madaData?>;</script>
 @endsection
