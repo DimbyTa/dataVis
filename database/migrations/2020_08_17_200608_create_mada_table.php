@@ -13,6 +13,7 @@ class CreateMadaTable extends Migration
      */
     public function up()
     {
+	if(!Schema::hasTable('madas')){
         Schema::create('madas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('cas_comfirmes');
@@ -22,7 +23,8 @@ class CreateMadaTable extends Migration
             $table->integer('gueris');
             $table->string('name_region');
             $table->date('date');
-        });
+	});
+	}
     }
 
     /**

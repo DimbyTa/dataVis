@@ -35,7 +35,7 @@ const tracking = function(){
 }
 
 const svgDataParRegion = select("#casesPerRegion svg");
-renderBarChart(madaData, "name_region", "cas_comfirmes", svgDataParRegion);
+renderBarChart(madaData, "name_region", "cas_confirmes", svgDataParRegion);
 
 //	Importing datas
 csv('data/cumul-mada.csv').then( (data, error) => {

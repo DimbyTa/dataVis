@@ -38,9 +38,9 @@ def getHash(url):
 
 current_hash = getHash("http://cco-covid19.gov.mg/fr/accueil/")
 ### Detect change in the code
-#while (getHash("http://cco-covid19.gov.mg/fr/accueil/") == current_hash):
-    #print("Not Changed")
-    #time.sleep(300)
+while (getHash("http://cco-covid19.gov.mg/fr/accueil/") == current_hash):
+    print("Not Changed")
+    time.sleep(600)
 
 
 
@@ -48,6 +48,8 @@ html1 = sc.getHTML("http://cco-covid19.gov.mg/fr/accueil/")
 df1 = sc.getDataMadaRegion(html1)
 df1 = df1.drop(df1.index[1])
 df1 = df1.reset_index(drop=True)
+df1.pop('title')
+df1.pop('id')
 d = ['cas_confirmes','deces','en_traitement','formes_graves','gueris']
 #for row in d:
 	#df1[row] = df1[row].astype(int)

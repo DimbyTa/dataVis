@@ -167,27 +167,22 @@ def DataFrameToTableMada(dataframe):
     
     db = connectionTodb("dataVis","dataVis2020","localhost","dataVis")
     cursor = db.cursor()
-    query = """CREATE TABLE IF NOT EXISTS Mada (cas_confirmes INT,
+    query = """CREATE TABLE IF NOT EXISTS madas (id INT PRIMARY KEY AUTO_INCREMENT,cas_confirmes INT,
                                                      deces INT,
                                                      en_traitement INT,
                                                      formes_graves INT,
 						     gueris  INT,
-                                                     id VARCHAR(255),
-                                                     id_no_spaces VARCHAR(255),
-                                                     title VARCHAR(50),
+                                                     name_region VARCHAR(255),
                                                      date DATE
                                                      );"""
     
-    insertion = """INSERT IGNORE INTO `Mada` (cas_confirmes,
+    insertion = """INSERT IGNORE INTO `madas` (name_region,cas_confirmes,
                                                      deces ,
                                                      en_traitement ,
                                                      formes_graves ,
 						     gueris  ,
-                                                     id ,
-                                                     id_no_spaces ,
-                                                     title ,
                                                      date
-                                                        ) VALUES (%s,%s, %s, %s, %s, %s, %s,%s,%s)"""
+                                                        ) VALUES (%s, %s, %s, %s, %s,%s,%s)"""
     
     cursor.execute(query)
     for i in range(len(dataframe)):
