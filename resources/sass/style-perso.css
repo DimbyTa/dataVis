@@ -1,0 +1,36 @@
+
+
+.line-path{
+	fill : none;
+	stroke-width: 1px;
+	stroke :steelblue;
+	stroke-linejoin: round;
+}
+
+.path-focus{
+	stroke-width: 3px;
+}
+
+circle{
+	fill: steelblue;
+	stroke: none;
+}
+
+body {
+	background-color: aliceblue;
+}
+
+.section{
+	margin-bottom: 20px;
+}
+
+#tooltip{
+	position: fixed;
+	left: 40px;
+	top: 0px;
+	background-color: #222;
+	border-radius: 5px;
+	color: rgb(194, 194, 194);
+	padding: 5px;
+	font-size : 0.8em;
+}
