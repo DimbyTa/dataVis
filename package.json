@@ -20,6 +20,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "babel-plugin-module-resolver": "^4.0.0",
         "bootstrap": "^4.4.1",
         "d3": "^5.16.0"
     }

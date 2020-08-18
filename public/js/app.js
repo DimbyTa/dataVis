@@ -48669,7 +48669,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 console.log(madaData);
- //	Bar chart
+ // madaData.forEach()
+//	Bar chart
 
 var svgContainer = document.querySelector('#newCases svg');
 var width = parseInt(getComputedStyle(svgContainer).width);
@@ -48688,7 +48689,7 @@ var tracking = function tracking() {
 };
 
 var svgDataParRegion = Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])("#casesPerRegion svg");
-renderBarChart(madaData, "name_region", "cas_comfirmes", svgDataParRegion); //	Importing datas
+renderBarChart(madaData, "name_region", "cas_confirmes", svgDataParRegion); //	Importing datas
 
 Object(d3__WEBPACK_IMPORTED_MODULE_0__["csv"])('data/cumul-mada.csv').then(function (data, error) {
   // console.log(data);
@@ -48743,12 +48744,13 @@ function renderBarChart(data, xIndex, yIndex, svgContainer) {
   var graphWrapper = svgContainer.append('g').attr('transform', "translate(".concat(margin.left, ", ").concat(margin.top, ")")); //	Creating axis
 
   var invertYScale = Object(d3__WEBPACK_IMPORTED_MODULE_0__["scaleLinear"])().domain([0, Object(d3__WEBPACK_IMPORTED_MODULE_0__["max"])(data, yValue)]).range([innerHeight, 0]); // const yAxis = axisLeft(invertYScale);
-  // const xAxis = axisBottom(xScale);
+
+  var xAxis = Object(d3__WEBPACK_IMPORTED_MODULE_0__["axisBottom"])(xScale); // const xAxis = axisBottom(scaleTime().domain(extent(data, xValue)).range([0,innerWidth]))
   // console.log(yScale.domain()); 
   //	Adding axis to the graphWrapper
 
   graphWrapper.append('g').call(Object(d3__WEBPACK_IMPORTED_MODULE_0__["axisLeft"])(invertYScale)).selectAll(".domain").remove();
-  graphWrapper.append('g').call(Object(d3__WEBPACK_IMPORTED_MODULE_0__["axisBottom"])(Object(d3__WEBPACK_IMPORTED_MODULE_0__["scaleTime"])().domain(Object(d3__WEBPACK_IMPORTED_MODULE_0__["extent"])(data, xValue)).range([0, innerWidth]))).attr('transform', "translate(0, ".concat(innerHeight, ")")).selectAll(".tick text").attr('text-anchor', 'end').attr('transform', 'rotate(-60)'); // //	Creating rect for the bars
+  graphWrapper.append('g').call(xAxis).attr('transform', "translate(0, ".concat(innerHeight, ")")).selectAll(".tick text").attr('text-anchor', 'end').attr('transform', 'rotate(-60)'); // //	Creating rect for the bars
   // graphWrapper.selectAll("rect").data(data)
   // 	.enter().append('rect')
   // 	.attr('y', d => yScale(d[yIndex]))
@@ -48768,16 +48770,17 @@ function renderBarChart(data, xIndex, yIndex, svgContainer) {
     return xScale.bandwidth();
   }).on("mouseover", function (a, b, c) {
     // Object { Date_reported: Date Mon Jul 06 2020 03:00:00 GMT+0300 (East Africa Time), Country_code: "MG", Country: "Madagascar", WHO_region: "AFRO", New_cases: 213, Cumulative_cases: 2941, New_deaths: 3, Cumulative_deaths: 32, Date_formated: "2020-07-06" }
-    var text = "<strong> ".concat(a.Date_formated, "</strong></br>");
-    text += "Total cas: ".concat(a.Cumulative_cases, "</br>");
-    text += "Nouveau cas: ".concat(a.New_cases, "</br>");
-    text += "Nouveau d\xE9c\xE8s: ".concat(a.New_deaths, "</br>");
+    var text = "<strong> ".concat(a.name_region, "</strong></br>");
+    text += "Total cas: ".concat(a.cas_confirmes, "</br>");
+    text += "Guerris: ".concat(a.gueris, "</br>");
+    text += "D\xE9c\xE8s: ".concat(a.deces, "</br>");
     Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])(this).attr('class', 'focused').attr("r", 6);
+    Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])("#tooltip").style('opacity', 1).html(text);
   }).on("mouseout", function () {
     Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])("#tooltip").style('opacity', 0);
     Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])(this).attr('class', '').attr("r", 4);
   }).on("mousemove", function () {
-    // console.log(event.clientX);
+    console.log(d3__WEBPACK_IMPORTED_MODULE_0__["event"].clientX);
     var x = d3__WEBPACK_IMPORTED_MODULE_0__["event"].clientX;
     var y = d3__WEBPACK_IMPORTED_MODULE_0__["event"].clientY;
     x += 10;

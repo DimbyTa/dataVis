@@ -17,6 +17,7 @@ import {
 	event
 } from "d3";
 
+// madaData.forEach()
 
 //	Bar chart
 var svgContainer = document.querySelector('#newCases svg');
@@ -96,14 +97,15 @@ function renderBarChart(data, xIndex, yIndex, svgContainer){
 		.domain([0, max(data, yValue)])
 		.range([innerHeight, 0]);
 	// const yAxis = axisLeft(invertYScale);
-	// const xAxis = axisBottom(xScale);
+	const xAxis = axisBottom(xScale);
+	// const xAxis = axisBottom(scaleTime().domain(extent(data, xValue)).range([0,innerWidth]))
 	// console.log(yScale.domain()); 
 
 	//	Adding axis to the graphWrapper
 	graphWrapper.append('g').call(axisLeft(invertYScale))
 		.selectAll(".domain")
 		.remove();
-	graphWrapper.append('g').call(axisBottom(scaleTime().domain(extent(data, xValue)).range([0,innerWidth])))
+	graphWrapper.append('g').call(xAxis)
 		.attr('transform', `translate(0, ${innerHeight})`)
 		.selectAll(".tick text")
 		.attr('text-anchor', 'end')
@@ -132,15 +134,16 @@ function renderBarChart(data, xIndex, yIndex, svgContainer){
 		.attr('width', d => xScale.bandwidth())
 		.on("mouseover", function(a, b, c) {
 			// Object { Date_reported: Date Mon Jul 06 2020 03:00:00 GMT+0300 (East Africa Time), Country_code: "MG", Country: "Madagascar", WHO_region: "AFRO", New_cases: 213, Cumulative_cases: 2941, New_deaths: 3, Cumulative_deaths: 32, Date_formated: "2020-07-06" }
-			let text = `<strong> ${a.Date_formated}</strong></br>`;
-			text += `Total cas: ${a.Cumulative_cases}</br>`;
-			text += `Nouveau cas: ${a.New_cases}</br>`;
-			text += `Nouveau décès: ${a.New_deaths}</br>`;
+			let text = `<strong> ${a.name_region}</strong></br>`;
+			text += `Total cas: ${a.cas_confirmes}</br>`;
+			text += `Guerris: ${a.gueris}</br>`;
+			text += `Décès: ${a.deces}</br>`;
 			select(this).attr('class', 'focused').attr("r", 6);
+			select("#tooltip").style('opacity', 1).html(text);
 			})
 		.on("mouseout", function() { select("#tooltip").style('opacity', 0);select(this).attr('class', '').attr("r", 4);})
 		.on("mousemove", function() {
-			// console.log(event.clientX);
+			console.log(event.clientX);
 			let x = event.clientX;
 			let y = event.clientY;
 			x += 10;

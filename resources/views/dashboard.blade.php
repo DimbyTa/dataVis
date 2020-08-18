@@ -98,7 +98,7 @@
 			<div class="col-md-7">
 				<div class="section">
 					<div class="card">
-						<div class="card-header"><h3>Cas cumulés log</h3></div>
+						<div class="card-header"><h3>Cas par region</h3></div>
 						<div class="card-body"  style="padding: 1.25rem">
 							<div id="casesPerRegion">
 								<svg width="100%" height="400px"></svg>						
