@@ -12,8 +12,11 @@ class Dashboard extends Controller
     //
     public function home(){
         //  Recuperation des donnees totals pour madagascar
-
-        $madaData = json_encode(Mada::all());
+        $madaData = DB::table('OurWorldIndata')
+                ->select('total_cases','new_cases', 'total_deaths', 'new_deaths', 'date')
+                ->where('location', 'Madagascar')
+                ->get();
+        $madaData = json_encode($madaData);
         
         //  Recuperation des  derniers nouveau cas
 
@@ -30,12 +33,19 @@ class Dashboard extends Controller
             // 'gueris' => [3459, 3678],
         ];
         //  Recuperation des donnees par region a madagascar
-        $madaParRegion = '';
+        $madaPerRegion = json_encode(Mada::all());
+
 
         //  Recuperation des 10 premiers pays les plus touchees
 
+        $mostCasesInCountry = DB::table('Latest')
+                ->select('Country','total_cases', 'total_deaths')
+                ->limit(10)
+                ->get();
+        $mostCasesInCountry = json_encode($mostCasesInCountry);
+
         //  Affichage de la page
-        return view('dashboard', compact('lastCases', 'madaParRegion', 'madaData'));
+        return view('dashboard', compact('lastCases', 'madaPerRegion', 'madaData', 'mostCasesInCountry'));
     }
 
     

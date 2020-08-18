@@ -1,15 +1,19 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);/*
 *	Style for the diagramme
 */
+
+.graph-wrapper{
+	fill: rgba(0,0,0,0.1);
+}
 .line-path{
 	fill : none;
-	stroke-width: 1px;
+	stroke-width: 4px;
 	stroke :steelblue;
 	stroke-linejoin: round;
 }
 
 .path-focus{
-	stroke-width: 3px;
+	stroke-width: 4px;
 }
 
 circle{
@@ -28,6 +32,26 @@ circle{
 	font-size : 0.8em;
 }
 
+rect {
+	fill : steelblue;
+}
+
+/*	Customizing graphs	*/
+text{
+	font-size: 1.2em;
+}
+text.graph-title{
+	font-size: 1.5em;
+}
+
+#last-10-country{
+	background-color: white;
+	border-radius: 10px;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+
 body {
 	background-color: aliceblue;
 }
@@ -43,7 +67,8 @@ body {
 	display: inline-block;
 	/* box-shadow: 0 0 10px white; */
 	border-radius: 10px;
-	margin-bottom: 20px;
+	padding: 20px;
+	/* margin-bottom: 400px; */
 }
 .section-diagrame{
 	background-color: white;
@@ -122,7 +147,7 @@ body {
   line-height: 1.6;
   color: #212529;
   text-align: left;
-  background-color: #00093D;
+  background-color: #010418;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -562,7 +587,7 @@ mark,
 
 .img-thumbnail {
   padding: 0.25rem;
-  background-color: #00093D;
+  background-color: #010418;
   border: 1px solid #dee2e6;
   border-radius: 0.25rem;
   max-width: 100%;
@@ -4310,15 +4335,15 @@ input[type=button].btn-block {
 }
 
 .custom-range:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px #00093D, 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
+  box-shadow: 0 0 0 1px #010418, 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
 }
 
 .custom-range:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px #00093D, 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
+  box-shadow: 0 0 0 1px #010418, 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
 }
 
 .custom-range:focus::-ms-thumb {
-  box-shadow: 0 0 0 1px #00093D, 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
+  box-shadow: 0 0 0 1px #010418, 0 0 0 0.2rem rgba(52, 144, 220, 0.25);
 }
 
 .custom-range::-moz-focus-outer {
@@ -4524,8 +4549,8 @@ input[type=button].btn-block {
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
   color: #495057;
-  background-color: #00093D;
-  border-color: #dee2e6 #dee2e6 #00093D;
+  background-color: #010418;
+  border-color: #dee2e6 #dee2e6 #010418;
 }
 
 .nav-tabs .dropdown-menu {

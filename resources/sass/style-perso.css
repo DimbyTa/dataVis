@@ -1,15 +1,19 @@
 /*
 *	Style for the diagramme
 */
+
+.graph-wrapper{
+	fill: rgba(0,0,0,0.1);
+}
 .line-path{
 	fill : none;
-	stroke-width: 1px;
+	stroke-width: 4px;
 	stroke :steelblue;
 	stroke-linejoin: round;
 }
 
 .path-focus{
-	stroke-width: 3px;
+	stroke-width: 4px;
 }
 
 circle{
@@ -28,6 +32,26 @@ circle{
 	font-size : 0.8em;
 }
 
+rect {
+	fill : steelblue;
+}
+
+/*	Customizing graphs	*/
+text{
+	font-size: 1.2em;
+}
+text.graph-title{
+	font-size: 1.5em;
+}
+
+#last-10-country{
+	background-color: white;
+	border-radius: 10px;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+
 body {
 	background-color: aliceblue;
 }
@@ -43,7 +67,8 @@ body {
 	display: inline-block;
 	/* box-shadow: 0 0 10px white; */
 	border-radius: 10px;
-	margin-bottom: 20px;
+	padding: 20px;
+	/* margin-bottom: 400px; */
 }
 .section-diagrame{
 	background-color: white;

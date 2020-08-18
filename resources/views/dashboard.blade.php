@@ -1,40 +1,47 @@
 @extends('templates.default')
 @section('content')
 <div class="container ">
-    <div class="tableau-resume">
-        <div class="col-md-8">
-            <h2><?=$lastCases['dates'][1]?> </h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th><?=$lastCases['dates'][0]?></th>
-                        <th><?=$lastCases['dates'][1]?></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tr>
-                        <th>Nouveau cas</th>
-                        <td><?=$lastCases['new_cases'][0]?></td>
-                        <td><?=$lastCases['new_cases'][1]?></td>
-                        <td><?=$lastCases['new_cases'][1] - $lastCases['new_cases'][0]?></td>
-                    </tr>
-                    <!-- <tr>
-						<th>Gueris</th>
-                        <td><?php //echo$lastCases['gueris'][0]?></td>
-                        <td><?php //echo$lastCases['gueris'][1]?></td>
-                        <td><?php //echo$lastCases['gueris'][1] - $lastCases['gueris'][0]?></td>
-                    </tr> -->
+	<div class="row" >
+		<div class="col-md-5">
+			<div class="tableau-resume">
+				<h2></h2>
+				<table class="table">
+					<thead>
+						<tr>
+							<th></th>
+							<th><?=$lastCases['dates'][0]?></th>
+							<th><?=$lastCases['dates'][1]?></th>
+							<th></th>
+						</tr>
+					</thead>
 					<tr>
-						<th>Déces</th>
-                        <td><?=$lastCases['deaths'][0]?></td>
-                        <td><?=$lastCases['deaths'][1]?></td>
-                        <td><?=$lastCases['deaths'][1] - $lastCases['deaths'][0]?></td>
-                    </tr>
-                
-                </tbody>
-            </table>
-        </div>
+							<th>Nouveau cas</th>
+							<td><?=$lastCases['new_cases'][0]?></td>
+							<td><?=$lastCases['new_cases'][1]?></td>
+							<td><?=$lastCases['new_cases'][1] - $lastCases['new_cases'][0]?></td>
+						</tr>
+						<!-- <tr>
+							<th>Gueris</th>
+							<td><?php //echo$lastCases['gueris'][0]?></td>
+							<td><?php //echo$lastCases['gueris'][1]?></td>
+							<td><?php //echo$lastCases['gueris'][1] - $lastCases['gueris'][0]?></td>
+						</tr> -->
+						<tr>
+							<th>Déces</th>
+							<td><?=$lastCases['deaths'][0]?></td>
+							<td><?=$lastCases['deaths'][1]?></td>
+							<td><?=$lastCases['deaths'][1] - $lastCases['deaths'][0]?></td>
+						</tr>
+					
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-md-7">
+			<div id="last-10-country">
+				<svg  width="100%" height="400px"></svg>
+			</div>
+		</div>
     </div>
 	<section class="section-diagrame">
 		<div class="row">
@@ -125,9 +132,14 @@
 			</div>
 		</div>
 	</section>
+	<?php //var_dump($mostCasesInCountry);?>
 </div>
 @endsection
 
 @section('jsImport')
-<script> var madaData = <?=$madaData?>;</script>
+<script> 
+	var madaPerRegion = <?=$madaPerRegion?>;
+	var madaData = <?=$madaData?>;
+	var lastCountry = <?=$mostCasesInCountry?>;
+</script>
 @endsection
