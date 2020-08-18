@@ -32,8 +32,10 @@ class Dashboard extends Controller
         //  Recuperation des donnees par region a madagascar
         $madaParRegion = '';
 
+        //  Recuperation des 10 premiers pays les plus touchees
+
         //  Affichage de la page
-        return view('dashboard', compact('lastCases', 'madaParRegion', 'madaData', 'mada'));
+        return view('dashboard', compact('lastCases', 'madaParRegion', 'madaData'));
     }
 
     

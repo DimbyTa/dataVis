@@ -125,8 +125,6 @@
 			</div>
 		</div>
 	</section>
-
-	<?php var_dump($mada)?>
 </div>
 @endsection
 
