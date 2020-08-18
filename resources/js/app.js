@@ -17,7 +17,6 @@ import {
 	event
 } from "d3";
 
-// madaData.forEach()
 
 //	Bar chart
 var svgContainer = document.querySelector('#newCases svg');
@@ -27,7 +26,6 @@ select('body')
    .append('div')
 	.attr('id', 'tooltip')
 	.style('opacity', 0);
-// const svgCumul = select("#cumulMada svg");
 
 const margin = {top : 20, right : 20, bottom : 80, left : 80};
 
@@ -51,9 +49,12 @@ csv('data/cumul-mada.csv').then( (data, error) => {
 		d.New_deaths = +d.New_deaths;
 		d.Cumulative_deaths = +d.Cumulative_deaths;
 	});
+
+	//	Recuperation des svg containers
 	const svgCumul = select("#casesCumul svg");
 	const svgCumulLog = select("#casesCumulLog svg");
 	const svgNewCases = select("#newCases svg");
+
 	//	Show the data into a bar chart model
 	// render(data, "New_cases", "Date_formated");
 	renderLineChart(data, "Date_reported", "New_cases", svgNewCases, 'linear');
@@ -72,15 +73,16 @@ csv('data/cumul-mada.csv').then( (data, error) => {
 
 function renderBarChart(data, xIndex, yIndex, svgContainer){
 	console.log("Rendering bar chart");
-	console.log(svgContainer);
+	// console.log(svgContainer);
 	const xValue = d => d[xIndex];
 	const yValue = d => d[yIndex];
 
+	//Values for plotting(size of the images)
 	const innerWidth = width - margin.left - margin.right;
 	const innerHeight = height - margin.top - margin.bottom;
 
 	
-	//	Creating scale
+	//	Creating scales
 	const xScale = scaleBand()
 		.domain(data.map( d => d[xIndex]))
 		.range([0, innerWidth])
@@ -88,10 +90,13 @@ function renderBarChart(data, xIndex, yIndex, svgContainer){
 	const yScale = scaleLinear()
 		.domain([0, max(data, yValue)])
 		.range([0, innerHeight]);
+
+
 	//	Creating the wrapper of the graph(container)
 	const graphWrapper = svgContainer.append('g')
 		.attr('transform', `translate(${margin.left}, ${margin.top})`);
 	
+
 	//	Creating axis
 	const invertYScale = scaleLinear()
 		.domain([0, max(data, yValue)])
@@ -111,12 +116,6 @@ function renderBarChart(data, xIndex, yIndex, svgContainer){
 		.attr('text-anchor', 'end')
 		.attr('transform', 'rotate(-60)');
 
-	// //	Creating rect for the bars
-	// graphWrapper.selectAll("rect").data(data)
-	// 	.enter().append('rect')
-	// 	.attr('y', d => yScale(d[yIndex]))
-	// 	.attr('width', d => xScale(d[xIndex]))
-	// 	.attr('height', d => yScale.bandwidth());
 
 	//	Creating rect for the bars
 	graphWrapper.append('rect')
@@ -228,16 +227,15 @@ function renderLineChart(data, xIndex, yIndex, svgContainer, mode){
 		.attr('cx', d => xScale(d[xIndex]))
 		.attr('cy', d => yScale(d[yIndex]))
 		.attr('r', 4)
-		.on("mouseover", function(a, b, c) {
+		.on("mouseover", function(a) {
 			//Creating text for the tooltip
 			let text = `<strong> ${a.Date_formated}</strong></br>`;
 			text += `Total cas: ${a.Cumulative_cases}</br>`;
 			text += `Nouveau cas: ${a.New_cases}</br>`;
 			text += `Nouveau décès: ${a.New_deaths}</br>`;
-			// text += `Gueris: ${a.New_}</br>`;
 
 			//Debugging
-			console.log(a); 
+			// console.log(a); 
 			select('#tooltip').style('opacity', 1).html(text);
 			select(this).attr('class', 'focused').attr("r", 6);
 			})
@@ -251,25 +249,4 @@ function renderLineChart(data, xIndex, yIndex, svgContainer, mode){
 			.style('left', x + 'px')
 			.style('top', y + 'px');
 		});
-
-
 }
-
-// //	Loading data
-// csv('cumul-mada.csv').then( (data) => {
-// 	//	Les données sont importées, debut du processing
-// 	//	Formating data(parsing to int)
-// 	data.forEach( d => {
-// 		d.Date_formated = d.Date_reported;
-// 		d.Date_reported = new Date(d.Date_reported);
-// 		d.New_cases = +d.New_cases;
-// 		d.Cumulative_cases = +d.Cumulative_cases;
-// 		d.New_deaths = +d.New_deaths;
-// 		d.Cumulative_deaths = +d.Cumulative_deaths;
-// 	});
-
-// 	//	Show the data into a bar chart model
-// 	// render(data, "New_cases", "Date_formated");
-// 	render(data, "Date_reported", "New_cases");
-// });
-

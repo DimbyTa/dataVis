@@ -48669,14 +48669,12 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 console.log(madaData);
- // madaData.forEach()
-//	Bar chart
+ //	Bar chart
 
 var svgContainer = document.querySelector('#newCases svg');
 var width = parseInt(getComputedStyle(svgContainer).width);
 var height = parseInt(getComputedStyle(svgContainer).height);
-Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])('body').append('div').attr('id', 'tooltip').style('opacity', 0); // const svgCumul = select("#cumulMada svg");
-
+Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])('body').append('div').attr('id', 'tooltip').style('opacity', 0);
 var margin = {
   top: 20,
   right: 20,
@@ -48702,7 +48700,8 @@ Object(d3__WEBPACK_IMPORTED_MODULE_0__["csv"])('data/cumul-mada.csv').then(funct
     d.Cumulative_cases = +d.Cumulative_cases;
     d.New_deaths = +d.New_deaths;
     d.Cumulative_deaths = +d.Cumulative_deaths;
-  });
+  }); //	Recuperation des svg containers
+
   var svgCumul = Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])("#casesCumul svg");
   var svgCumulLog = Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])("#casesCumulLog svg");
   var svgNewCases = Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])("#newCases svg"); //	Show the data into a bar chart model
@@ -48722,8 +48721,7 @@ Object(d3__WEBPACK_IMPORTED_MODULE_0__["csv"])('data/cumul-mada.csv').then(funct
  */
 
 function renderBarChart(data, xIndex, yIndex, svgContainer) {
-  console.log("Rendering bar chart");
-  console.log(svgContainer);
+  console.log("Rendering bar chart"); // console.log(svgContainer);
 
   var xValue = function xValue(d) {
     return d[xIndex];
@@ -48731,10 +48729,11 @@ function renderBarChart(data, xIndex, yIndex, svgContainer) {
 
   var yValue = function yValue(d) {
     return d[yIndex];
-  };
+  }; //Values for plotting(size of the images)
+
 
   var innerWidth = width - margin.left - margin.right;
-  var innerHeight = height - margin.top - margin.bottom; //	Creating scale
+  var innerHeight = height - margin.top - margin.bottom; //	Creating scales
 
   var xScale = Object(d3__WEBPACK_IMPORTED_MODULE_0__["scaleBand"])().domain(data.map(function (d) {
     return d[xIndex];
@@ -48750,13 +48749,7 @@ function renderBarChart(data, xIndex, yIndex, svgContainer) {
   //	Adding axis to the graphWrapper
 
   graphWrapper.append('g').call(Object(d3__WEBPACK_IMPORTED_MODULE_0__["axisLeft"])(invertYScale)).selectAll(".domain").remove();
-  graphWrapper.append('g').call(xAxis).attr('transform', "translate(0, ".concat(innerHeight, ")")).selectAll(".tick text").attr('text-anchor', 'end').attr('transform', 'rotate(-60)'); // //	Creating rect for the bars
-  // graphWrapper.selectAll("rect").data(data)
-  // 	.enter().append('rect')
-  // 	.attr('y', d => yScale(d[yIndex]))
-  // 	.attr('width', d => xScale(d[xIndex]))
-  // 	.attr('height', d => yScale.bandwidth());
-  //	Creating rect for the bars
+  graphWrapper.append('g').call(xAxis).attr('transform', "translate(0, ".concat(innerHeight, ")")).selectAll(".tick text").attr('text-anchor', 'end').attr('transform', 'rotate(-60)'); //	Creating rect for the bars
 
   graphWrapper.append('rect').attr('height', innerHeight).attr('width', innerWidth).style('fill', 'rgba(0,0,0,0.1') // .on("mouseover", function(a,b,c){ console.log("Tafiditra")})
   .on("mousemove", tracking);
@@ -48849,15 +48842,14 @@ function renderLineChart(data, xIndex, yIndex, svgContainer, mode) {
     return xScale(d[xIndex]);
   }).attr('cy', function (d) {
     return yScale(d[yIndex]);
-  }).attr('r', 4).on("mouseover", function (a, b, c) {
+  }).attr('r', 4).on("mouseover", function (a) {
     //Creating text for the tooltip
     var text = "<strong> ".concat(a.Date_formated, "</strong></br>");
     text += "Total cas: ".concat(a.Cumulative_cases, "</br>");
     text += "Nouveau cas: ".concat(a.New_cases, "</br>");
-    text += "Nouveau d\xE9c\xE8s: ".concat(a.New_deaths, "</br>"); // text += `Gueris: ${a.New_}</br>`;
-    //Debugging
+    text += "Nouveau d\xE9c\xE8s: ".concat(a.New_deaths, "</br>"); //Debugging
+    // console.log(a); 
 
-    console.log(a);
     Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])('#tooltip').style('opacity', 1).html(text);
     Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])(this).attr('class', 'focused').attr("r", 6);
   }).on("mouseout", function () {
@@ -48870,22 +48862,7 @@ function renderLineChart(data, xIndex, yIndex, svgContainer, mode) {
     x += 10;
     Object(d3__WEBPACK_IMPORTED_MODULE_0__["select"])("#tooltip").style('left', x + 'px').style('top', y + 'px');
   });
-} // //	Loading data
-// csv('cumul-mada.csv').then( (data) => {
-// 	//	Les données sont importées, debut du processing
-// 	//	Formating data(parsing to int)
-// 	data.forEach( d => {
-// 		d.Date_formated = d.Date_reported;
-// 		d.Date_reported = new Date(d.Date_reported);
-// 		d.New_cases = +d.New_cases;
-// 		d.Cumulative_cases = +d.Cumulative_cases;
-// 		d.New_deaths = +d.New_deaths;
-// 		d.Cumulative_deaths = +d.Cumulative_deaths;
-// 	});
-// 	//	Show the data into a bar chart model
-// 	// render(data, "New_cases", "Date_formated");
-// 	render(data, "Date_reported", "New_cases");
-// });
+}
 
 /***/ }),
 
