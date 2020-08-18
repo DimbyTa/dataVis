@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Mada;
 use \App\CountryData;
+use DB;
 
 class Dashboard extends Controller
 {
@@ -16,12 +17,17 @@ class Dashboard extends Controller
         
         //  Recuperation des  derniers nouveau cas
 
-        // $mada = DB::table('madas')->lists('name_region').lists('deces');
+        $mada = DB::table('OurWorldIndata')
+                ->select('total_cases', 'total_deaths', 'date')
+                ->orderByDesc('date')
+                ->where('location', 'Madagascar')
+                ->limit(2)
+            ->get();
         $lastCases = [
-            'dates' => ['2020-08-17', '2020-08-18'],
-            'new_cases' => [13678, 13789],
-            'deaths' => [163, 170],
-            'gueris' => [3459, 3678],
+            'dates' => [$mada[1]->date, $mada[0]->date],
+            'new_cases' => [$mada[1]->total_cases, $mada[0]->total_cases],
+            'deaths' => [$mada[1]->total_deaths, $mada[0]->total_deaths]
+            // 'gueris' => [3459, 3678],
         ];
         //  Recuperation des donnees par region a madagascar
         $madaParRegion = '';

@@ -19,12 +19,12 @@
                         <td><?=$lastCases['new_cases'][1]?></td>
                         <td><?=$lastCases['new_cases'][1] - $lastCases['new_cases'][0]?></td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
 						<th>Gueris</th>
-                        <td><?=$lastCases['gueris'][0]?></td>
-                        <td><?=$lastCases['gueris'][1]?></td>
-                        <td><?=$lastCases['gueris'][1] - $lastCases['gueris'][0]?></td>
-                    </tr>
+                        <td><?php //echo$lastCases['gueris'][0]?></td>
+                        <td><?php //echo$lastCases['gueris'][1]?></td>
+                        <td><?php //echo$lastCases['gueris'][1] - $lastCases['gueris'][0]?></td>
+                    </tr> -->
 					<tr>
 						<th>Déces</th>
                         <td><?=$lastCases['deaths'][0]?></td>
@@ -125,6 +125,8 @@
 			</div>
 		</div>
 	</section>
+
+	<?php var_dump($mada)?>
 </div>
 @endsection
 
